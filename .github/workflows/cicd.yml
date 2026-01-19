@@ -21,6 +21,6 @@ jobs:
       - name: Login to docker hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
       - name: Build docker image
-        run: docker build -t IO/Lab_11_12 .
+        run: docker build -t io_lab_11_12 .
       - name: Publish image to docker hub
-        run: docker push IO/Lab_11_12:latest
+        run: docker push io_lab_11_12:latest

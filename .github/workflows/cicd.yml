@@ -1,0 +1,26 @@
+name: Deploy Dockerized Spring Boot to EC2
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Build Project
+        run: mvn clean install -DskipTests
+
+      - name: Login to docker hub
+        run: docker login -u "Misiek26" -p "7(iPc#7P^6FRa*L"
+      - name: Build docker image
+        run: docker build -t IO/Lab_11_12 .
+      - name: Publish image to docker hub
+        run: docker push IO/Lab_11_12:latest

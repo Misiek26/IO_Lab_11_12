@@ -24,3 +24,19 @@ jobs:
         run: docker build -t misiek26/io_lab_11_12:latest .
       - name: Publish image to docker hub
         run: docker push misiek26/io_lab_11_12:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: | 
+            docker pull misiek26/io_lab_11_12:latest 
+            docker stop io_lab_11_12 || true 
+            docker rm io_lab_11_12 || true 
+            docker run -d -p 80:8080 --name io_lab_11_12 misiek26/io_lab_11_12:latest

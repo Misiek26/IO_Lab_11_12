@@ -1,13 +1,13 @@
 package org.example.io_lab_11_12.controllers;
 
 import org.example.io_lab_11_12.models.User;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class UserController {
     @GetMapping("/users")
     public List<User> getUsers() {
